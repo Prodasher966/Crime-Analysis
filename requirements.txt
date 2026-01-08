@@ -8,7 +8,6 @@ seaborn
 plotly
 # Dashboards & UI
 streamlit
-tkinter
 
 # Date & Time Utilities
 python-dateutil
