@@ -98,10 +98,29 @@ fig_sex = px.bar(sex_counts, x='Sex', y='Count', color='Count', title='Victim Se
 st.plotly_chart(fig_sex, use_container_width=True)
 
 # Victim Age Ranges
-age_bins = pd.cut(filtered['Vict Age'], bins=[0, 18, 30, 45, 60, 100])
-age_counts = age_bins.value_counts().sort_index().reset_index()
+age_bins = pd.cut(
+    filtered['Vict Age'],
+    bins=[0, 18, 30, 45, 60, 100],
+    labels=["0–18", "19–30", "31–45", "46–60", "60+"]
+)
+
+age_counts = (
+    age_bins
+    .value_counts()
+    .sort_index()
+    .reset_index()
+)
+
 age_counts.columns = ['Age Range', 'Count']
-fig_age = px.line(age_counts, x='Age Range', y='Count', markers=True, title='Victim Age Ranges')
+
+fig_age = px.line(
+    age_counts,
+    x='Age Range',
+    y='Count',
+    markers=True,
+    title='Victim Age Ranges'
+)
+
 st.plotly_chart(fig_age, use_container_width=True)
 
 # Victim Descent
@@ -116,3 +135,4 @@ weapon_counts = filtered['Weapon Desc'].value_counts().head(10).reset_index()
 weapon_counts.columns = ['Weapon', 'Count']
 fig_weapon = px.bar(weapon_counts, x='Count', y='Weapon', orientation='h', color='Count', title='Top Weapon Types', text='Count')
 st.plotly_chart(fig_weapon, use_container_width=True)
+
